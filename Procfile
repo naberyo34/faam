@@ -1,1 +1,1 @@
-web: node ./bin/www
+web: "ts-node ./src/index.ts"
