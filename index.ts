@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 const mySqlConnection = mysql.createConnection({
   host: process.env.DB_HOSTNAME || 'localhost',
   user: process.env.DB_USERNAME || 'root',
-  password: process.env.PASSWORD || '',
+  password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'faam_db',
 });
 
