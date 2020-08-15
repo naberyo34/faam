@@ -19,6 +19,10 @@ mySqlConnection.connect((err) => {
   console.log('MySQL connected.');
 });
 
+app.get('/', (_req, res) => {
+  res.send('this is API Route. Hello Express.');
+});
+
 // routes/v1/index.tsをrouterとして宣言
 app.use('/api/v1', router);
 
