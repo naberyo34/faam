@@ -3,11 +3,11 @@ import { connection } from '../../index';
 
 const router = express.Router();
 
-// ここでの'/' が (url)/api/v1/users として扱われる
+// ここでの'/' が (url)/api/v1/posts として扱われる
 
 // すべてのusersを取得して返す
 router.get('/', (_req, res) => {
-  const searchQuery = `select * from users`;
+  const searchQuery = `select * from posts`;
   connection.query(searchQuery, (err, result) => {
     if (err) console.log(err);
     res.send(result);
@@ -17,7 +17,7 @@ router.get('/', (_req, res) => {
 // IDに一致するデータを検索して返す
 router.get('/:id', (req, res) => {
   const userId = req.params.id;
-  const searchQuery = `select * from users where id=${userId}`;
+  const searchQuery = `select * from posts where id=${userId}`;
   connection.query(searchQuery, (err, result) => {
     if (err) console.log(err);
     res.send(result);
