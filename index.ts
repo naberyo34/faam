@@ -26,9 +26,6 @@ app.get('/', (_req, res) => {
   res.send('Hello Express.');
 });
 
-// すべてのAPIで、faam-spaからのCORSを許可
-app.use(cors(corsOptions));
-
 // routes/v1/index.tsをrouterとして宣言
 app.use('/api/v1', router);
 
