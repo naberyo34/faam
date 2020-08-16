@@ -7,9 +7,11 @@ const router = express.Router();
 
 // ここでの'/' が (url)/api/v1/posts として扱われる
 
-// すべてのpostsを取得して返す
 // cors middlewareを噛ませて、faam-spaからのリクエストのみを許可
-router.get('/', cors(corsOptions), (_req, res) => {
+router.use(cors(corsOptions));
+
+// すべてのpostsを取得して返す
+router.get('/', (_req, res) => {
   const searchQuery = `select * from posts`;
   connection.query(searchQuery, (err, result) => {
     if (err) console.log(err);
@@ -18,7 +20,7 @@ router.get('/', cors(corsOptions), (_req, res) => {
 });
 
 // IDに一致するデータを検索して返す
-router.get('/:id', cors(corsOptions), (req, res) => {
+router.get('/:id', (req, res) => {
   const userId = req.params.id;
   const query = `select * from posts where id=${userId}`;
   connection.query(query, (err, result) => {
@@ -29,7 +31,7 @@ router.get('/:id', cors(corsOptions), (req, res) => {
 
 // リクエストに従ってpostsを追加する
 // bodyParser を噛ませないとreq.bodyがうまく取れない
-router.post('/', cors(corsOptions), bodyParser.json(), (req, res) => {
+router.post('/', bodyParser.json(), (req, res) => {
   console.log(req.body);
   const { username, text } = req.body;
   const query = `insert into posts (username, text) value ('${username}', '${text}')`;
