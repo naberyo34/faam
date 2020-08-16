@@ -29,8 +29,8 @@ router.get('/:id', (req, res) => {
 // bodyParser を噛ませないとreq.bodyがうまく取れない
 router.post('/', bodyParser.json(), (req, res) => {
   console.log(req.body);
-  const { id, username, text } = req.body;
-  const query = `insert into posts (id, username, text) value (${id}, '${username}', '${text}')`;
+  const { username, text } = req.body;
+  const query = `insert into posts (username, text) value ('${username}', '${text}')`;
   connection.query(query, (err) => {
     if (err) {
       console.log(err);
