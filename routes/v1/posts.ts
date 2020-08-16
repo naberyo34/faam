@@ -29,7 +29,7 @@ router.get('/:id', cors(corsOptions), (req, res) => {
 
 // リクエストに従ってpostsを追加する
 // bodyParser を噛ませないとreq.bodyがうまく取れない
-router.post('/', cors(corsOptions), bodyParser.json(), (req, res) => {
+router.post('/', bodyParser.json(), cors(corsOptions), (req, res) => {
   console.log(req.body);
   const { username, text } = req.body;
   const query = `insert into posts (username, text) value ('${username}', '${text}')`;
