@@ -1,6 +1,5 @@
 import express from 'express';
 import mysql from 'mysql';
-import cors from 'cors';
 import router from './routes/v1';
 
 // Expressサーバーの用意
@@ -21,7 +20,7 @@ const settings = {
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'faam_db',
 };
-export const connection = mysql.createConnection(settings);
+export const pool = mysql.createPool(settings);
 
 app.get('/', (_req, res) => {
   res.send('Hello Express.');

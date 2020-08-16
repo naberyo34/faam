@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { connection, corsOptions } from '../../index';
+import { pool, corsOptions } from '../../index';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.use(cors(corsOptions));
 // すべてのpostsを取得して返す
 router.get('/', (_req, res) => {
   const searchQuery = `select * from posts`;
-  connection.query(searchQuery, (err, result) => {
+  pool.query(searchQuery, (err, result) => {
     if (err) console.log(err);
     res.json(result);
   });
@@ -23,7 +23,7 @@ router.get('/', (_req, res) => {
 router.get('/:id', (req, res) => {
   const userId = req.params.id;
   const query = `select * from posts where id=${userId}`;
-  connection.query(query, (err, result) => {
+  pool.query(query, (err, result) => {
     if (err) console.log(err);
     res.json(result);
   });
@@ -35,7 +35,7 @@ router.post('/', bodyParser.json(), (req, res) => {
   console.log(req.body);
   const { username, text } = req.body;
   const query = `insert into posts (username, text) value ('${username}', '${text}')`;
-  connection.query(query, (err) => {
+  pool.query(query, (err) => {
     if (err) {
       console.log(err);
       return;
