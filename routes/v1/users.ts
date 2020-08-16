@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', (_req, res) => {
   const searchQuery = `select * from users`;
   connection.query(searchQuery, (err, result) => {
-    if (err) throw err;
+    if (err) console.log(err);
     res.send(result);
   });
 });
@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
   const userId = req.params.id;
   const searchQuery = `select * from users where id=${userId}`;
   connection.query(searchQuery, (err, result) => {
-    if (err) throw err;
+    if (err) console.log(err);
     res.send(result);
   });
 });

@@ -15,31 +15,8 @@ const settings = {
 };
 export const connection = mysql.createConnection(settings);
 
-export const handleDisconnectMySql = () => {
-  connection.connect((err) => {
-    if (err) {
-      console.log('MySQL err: ', err, 'try reconnecting ...');
-      // 2秒後に再接続を試みる
-      setTimeout(handleDisconnectMySql, 2000);
-    }
-  });
-
-  connection.on('error', (err) => {
-    console.log('MySQL err: ', err);
-
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      handleDisconnectMySql();
-    } else {
-      console.log('FATAL ERR.');
-      throw err;
-    }
-  });
-};
-
-handleDisconnectMySql();
-
 app.get('/', (_req, res) => {
-  res.send('this is API Route. Hello Express.');
+  res.send('Hello Express.');
 });
 
 // routes/v1/index.tsをrouterとして宣言
