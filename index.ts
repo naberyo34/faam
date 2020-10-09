@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose = require('monngoose');
+import mongoose = require('mongoose');
 import router from './routes/v1';
 
 // Expressサーバーの用意
@@ -12,6 +12,8 @@ export const corsOptions = {
   methods: 'GET, PUT',
   optionsSuccessStatus: 200,
 };
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/');
 
 app.get('/', (_req, res) => {
   res.send('Hello Express.');
