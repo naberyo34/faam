@@ -1,9 +1,9 @@
 import express from 'express';
-import posts from './posts';
+import farm from './farm';
 
 const router = express.Router();
 
 // さらに細かくルーティングしていく
-router.use('/posts', posts);
+router.use('/farm', farm);
 
 export default router;
