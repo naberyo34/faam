@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { pool, corsOptions } from '../../index';
+import { corsOptions } from '../../index';
+import User from '../../models/user';
 
 const router = express.Router();
 
@@ -10,37 +11,30 @@ const router = express.Router();
 // cors middlewareを噛ませて、faam-spaからのリクエストのみを許可
 router.use(cors(corsOptions));
 
-// すべてのpostsを取得して返す
+// 全てのユーザーを取得する
 router.get('/', (_req, res) => {
-  const searchQuery = `select * from posts`;
-  pool.query(searchQuery, (err, result) => {
-    if (err) console.log(err);
-    res.json(result);
-  });
-});
+  User.find((err, users) => {
+    if (err) return res.status(500).send('get failed');
 
-// IDに一致するデータを検索して返す
-router.get('/:id', (req, res) => {
-  const userId = req.params.id;
-  const query = `select * from posts where id=${userId}`;
-  pool.query(query, (err, result) => {
-    if (err) console.log(err);
-    res.json(result);
-  });
-});
+    res.json(users);
+  })
+})
 
 // リクエストに従ってpostsを追加する
 // bodyParser を噛ませないとreq.bodyがうまく取れない
 router.post('/', bodyParser.json(), (req, res) => {
-  console.log(req.body);
-  const { id, username, text } = req.body;
-  const query = `insert into posts (id, username, text) value (${id}, '${username}', '${text}')`;
-  pool.query(query, (err) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.json('success!');
+  if (!req.body) {
+    return res.status(500).send('request body is empty.');
+  }
+
+  const instance = new User();
+  instance.name = req.body.name;
+  instance.age = req.body.age;
+
+  instance.save((err) => {
+    if (err) return res.status(500).send('post failed');
+
+    res.json({ message: 'user create succeed.' });
   });
 });
 

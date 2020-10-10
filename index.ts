@@ -1,5 +1,5 @@
 import express from 'express';
-import mysql from 'mysql';
+import mongoose = require('mongoose');
 import router from './routes/v1';
 
 // Expressサーバーの用意
@@ -13,14 +13,10 @@ export const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-// MySQLに接続
-const settings = {
-  host: process.env.DB_HOSTNAME || 'localhost',
-  user: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'faam_db',
-};
-export const pool = mysql.createPool(settings);
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/jsonAPI', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.get('/', (_req, res) => {
   res.send('Hello Express.');
