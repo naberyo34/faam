@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import cors from 'cors';
-// import { corsOptions } from '../../index';
+import cors from 'cors';
+import { corsOptions } from '../../index';
 import User from '../../models/user';
 
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 // ここでの'/' が (url)/api/v1/posts として扱われる
 
 // cors middlewareを噛ませて、faam-spaからのリクエストのみを許可
-// router.use(cors(corsOptions));
+router.use(cors(corsOptions));
 
 // 全てのユーザーを取得する
 router.get('/', (_req, res) => {
@@ -17,7 +17,6 @@ router.get('/', (_req, res) => {
     if (err) return res.status(500).send('get failed');
 
     res.json(users);
-    return res.status(200).send('success');
   })
 })
 
@@ -36,7 +35,6 @@ router.post('/', bodyParser.json(), (req, res) => {
     if (err) return res.status(500).send('post failed');
 
     res.json({ message: 'user create succeed.' });
-    return res.status(200).send('success');
   });
 });
 
