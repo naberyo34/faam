@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 // インターフェースの定義 (TypeScript)
 interface Contribution {
-  date: Date;
+  date: string;
   description: string;
 }
 
