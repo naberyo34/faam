@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 // CORS関連設定
 export const corsOptions = {
   origin: 'https://faam-spa.netlify.app/',
-  methods: 'GET, PUT',
+  methods: 'GET, POST, PUT, DELETE',
   optionsSuccessStatus: 200,
 };
 
