@@ -46,7 +46,7 @@ router.post('/', bodyParser.json(), (req, res) => {
   const instance = new Farm();
   instance.author = req.body.author;
   instance.title = req.body.title;
-  instance.contributions = [];
+  instance.contributions = req.body.contributions;
 
   instance.save((err) => {
     if (err) {
@@ -66,7 +66,7 @@ router.put('/:id/contribution', bodyParser.json(), (req, res) => {
   }
 
   const targetId = req.params.id;
-  Farm.update(
+  Farm.updateOne(
     { _id: targetId },
     {
       $push: {
